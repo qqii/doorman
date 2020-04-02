@@ -143,7 +143,6 @@ function handleGremlinAction(e) {
         default:
             console.log("default");
     }
-
 }
 
 function run() {
@@ -156,6 +155,35 @@ function run() {
     }
 }
 
+function clickNext() {
+    if (window.location.href.startsWith("https://gremlins-api.reddit.com/results")) {
+        // lets hope getElementsByTagName doesn't change things up
+        let action = document.getElementsByTagName("gremlin-action")[0];
+        if (action) {
+            action.click();
+        }
+    }
+}
+
+function clickIfOne() {
+    var notes = document.getElementsByTagName("gremlin-note");
+    if (notes) {
+        let unselected = 0;
+        let un = notes[0];
+        for (let i = 0; i < notes.length; i++) {
+            if (notes[i].style.backgroundColor === "") {
+                unselected++;
+                un = notes[i];
+            }
+        }
+        if (unselected <= 1) {
+            un.click();
+        }
+    }
+}
+
 (function() {
+    setInterval(clickNext, 400);
+    setInterval(clickIfOne, 400);
     setTimeout(run, 100);
 })();
